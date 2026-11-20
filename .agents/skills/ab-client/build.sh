@@ -36,9 +36,9 @@ done
 iconutil -c icns "$iconset" -o "$app/Contents/Resources/icon.icns"
 rm -rf "$iconset"
 
-# Display name only: the bundle id, executable and data directory stay T3 Code's.
+# Display name only. Electron finds its helper apps by CFBundleName, so that one stays.
 plist="$app/Contents/Info.plist"
-/usr/libexec/PlistBuddy -c "Set :CFBundleName AB Code" -c "Set :CFBundleDisplayName AB Code" "$plist"
+/usr/libexec/PlistBuddy -c "Set :CFBundleDisplayName AB Code" "$plist"
 
 codesign --force --deep --sign - "$app"
 codesign --verify --deep --strict "$app"
