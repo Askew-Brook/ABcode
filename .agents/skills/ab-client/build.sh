@@ -21,7 +21,9 @@ unset T3CODE_DESKTOP_UPDATE_REPOSITORY GITHUB_REPOSITORY
 
 run pnpm install --frozen-lockfile
 rm -rf "$out"
-run pnpm exec vp run dist:desktop:artifact --platform mac --target zip --arch "$arch" --output-dir "$out"
+# package.json lags a release behind; the merged stable tag is the version the stock app reports.
+version=$(git describe --tags --abbrev=0 --match 'v[0-9]*' --exclude '*-*' | sed 's/^v//')
+run pnpm exec vp run dist:desktop:artifact --platform mac --target zip --arch "$arch" --build-version "$version" --output-dir "$out"
 
 ditto -x -k "$(ls "$out"/*.zip | head -1)" "$out/unpacked"
 mv "$(ls -d "$out"/unpacked/*.app | head -1)" "$app"
@@ -43,5 +45,4 @@ plist="$app/Contents/Info.plist"
 codesign --force --deep --sign - "$app"
 codesign --verify --deep --strict "$app"
 
-version=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" "$plist")
 echo "built $app ($version)"
