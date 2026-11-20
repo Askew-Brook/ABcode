@@ -16,6 +16,13 @@ The whole fork is:
   `STANDALONE_TRACKERS`.
 - `apps/web/src/components/issue/issuePresentation.tsx`: one `abportal` line in
   `STANDALONE_TRACKERS`.
+- `apps/web/src/components/issue/ProjectIssuesPanel.tsx`: ours. An "Open issues"
+  right-panel tab listing the thread's project, opened from an Issues row in
+  thread details. Its seams are an `"issues"` surface kind in `rightPanelStore.ts`
+  (three places) and `closedViewStore.ts`, a title and icon case in
+  `RightPanelTabs.tsx`, a render case in `chat/RightPanelSurfaceContent.tsx`, and
+  the row in `chat/ThreadDetailsPanel.tsx`. It reuses already-translated strings;
+  a new string means regenerating every locale catalog, so avoid one.
 - This skill.
 
 Keep it that way. New fork features go in new files with one-line seams, and

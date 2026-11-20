@@ -15,6 +15,7 @@ import { useT3ProjectFileScripts } from "../../hooks/useT3ProjectFileScripts";
 import { type EnvMode, type EnvironmentOption } from "../BranchToolbar.logic";
 import { BranchToolbar } from "../BranchToolbar";
 import GitActionsControl from "../GitActionsControl";
+import { ThreadDetailsProjectIssuesRow } from "../issue/ProjectIssuesPanel";
 import ProjectScriptsControl, {
   type NewProjectScriptInput,
   type ProjectScriptActionResult,
@@ -248,6 +249,9 @@ export function ThreadDetailsPanel(props: ThreadDetailsPanelProps) {
                         composerTarget={props.composerDraftTarget}
                       />
                     ) : null}
+                    {props.draftId ? null : (
+                      <ThreadDetailsProjectIssuesRow threadRef={activeThreadRef} />
+                    )}
                     {show.git && props.gitCwd ? (
                       <GitActionsControl
                         compact={density !== "full"}
